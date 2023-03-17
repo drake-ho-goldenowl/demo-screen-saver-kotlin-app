@@ -30,4 +30,5 @@ To install the app, follow these steps:
 
 ## Video
 
-https://user-images.githubusercontent.com/104961439/225824152-168bbd24-759f-47c6-908b-f80d8a54dd1f.mp4
+https://user-images.githubusercontent.com/104961439/225855723-241e61ad-91f7-46dd-b6b9-875e6d3f9cf3.mp4
+
