@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.drake.demeapp.databinding.FragmentMainBinding
 import com.drake.demeapp.ui.main.adapter.MainAdapter
-import com.drake.demeapp.utils.images2
+import com.drake.demeapp.utils.images
 
 class MainFragment : Fragment() {
 
@@ -28,7 +28,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            recyclerView.adapter = MainAdapter(images2)
+            recyclerView.adapter = MainAdapter(images)
         }
     }
 }

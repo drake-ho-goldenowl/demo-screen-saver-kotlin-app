@@ -1,6 +1,5 @@
 package com.drake.demeapp.ui.carousel
 
-import android.content.res.Resources
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,7 +12,7 @@ import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import com.drake.demeapp.databinding.FragmentCarouselBinding
 import com.drake.demeapp.ui.carousel.adapter.CarouselAdapter
-import com.drake.demeapp.utils.images2
+import com.drake.demeapp.utils.images
 import kotlin.math.abs
 
 class CarouselFragment : Fragment() {
@@ -44,7 +43,7 @@ class CarouselFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val carouselAdapter = CarouselAdapter(images2)
+        val carouselAdapter = CarouselAdapter(images)
         binding.apply {
             callback = Runnable {
                 val index = viewPager.currentItem

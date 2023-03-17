@@ -22,9 +22,7 @@ class CarouselAdapter(private val data: ArrayList<String>) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CarouselItemViewHolder {
         return CarouselItemViewHolder(
             ItemCarouselBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
+                LayoutInflater.from(parent.context), parent, false
             )
         )
     }

@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun resetTimer() {
         val fragment = supportFragmentManager.findFragmentByTag(CarouselFragment.TAG)
-        if(fragment != null){
+        if (fragment != null) {
             supportFragmentManager.beginTransaction()
                 .remove(fragment)
                 .commitNow()
