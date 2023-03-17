@@ -23,7 +23,7 @@ class MainViewModel : BaseViewModel() {
             toastMessage.postValue("Invalid")
         }
 
-        time.postValue(value * 1000)
+        time.postValue(value * MIN)
     }
 
     fun onClick() {
