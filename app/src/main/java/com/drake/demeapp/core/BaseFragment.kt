@@ -10,6 +10,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import com.drake.demeapp.OyikaApp
+import com.drake.demeapp.utils.ConnectivityManager
 
 typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
@@ -19,7 +21,6 @@ abstract class BaseFragment<VBinding : ViewBinding>(
     protected lateinit var binding: VBinding
 
     open val viewModel: BaseViewModel? get() = null
-
     open fun setUpViews() {}
 
     open fun setUpAdapter() {}
@@ -37,12 +38,15 @@ abstract class BaseFragment<VBinding : ViewBinding>(
         toast?.show()
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         arguments?.run {
             setUpArgument(this)
         }
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
