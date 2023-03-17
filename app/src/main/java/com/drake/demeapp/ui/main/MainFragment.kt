@@ -1,34 +1,37 @@
 package com.drake.demeapp.ui.main
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import com.drake.demeapp.MainViewModel
+import com.drake.demeapp.core.BaseFragment
 import com.drake.demeapp.databinding.FragmentMainBinding
-import com.drake.demeapp.ui.main.adapter.MainAdapter
-import com.drake.demeapp.utils.images
+import com.drake.demeapp.ui.bottomSheet.SettingBottomSheet
 
-class MainFragment : Fragment() {
+class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::inflate) {
+    override val viewModel: MainViewModel by activityViewModels()
 
     companion object {
         fun newInstance() = MainFragment()
     }
 
-    private lateinit var binding: FragmentMainBinding
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentMainBinding.inflate(inflater)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun setUpViews() {
+        val bottomSheet = SettingBottomSheet()
         binding.apply {
-            recyclerView.adapter = MainAdapter(images)
+            buttonStartNow.setOnClickListener {
+                viewModel.onClick()
+            }
+
+            buttonSetting.setOnClickListener {
+                bottomSheet.show(parentFragmentManager, SettingBottomSheet.TAG)
+            }
+
+            viewModel.dismissBottomSheet.observe(viewLifecycleOwner) {
+                if (it == true) {
+                    if (bottomSheet.isVisible) {
+                        bottomSheet.dismiss()
+                    }
+                    viewModel.dismissBottomSheet.postValue(false)
+                }
+            }
         }
     }
 }

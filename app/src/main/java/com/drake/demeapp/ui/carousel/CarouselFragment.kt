@@ -3,35 +3,26 @@ package com.drake.demeapp.ui.carousel
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
+import com.drake.demeapp.core.BaseFragment
 import com.drake.demeapp.databinding.FragmentCarouselBinding
 import com.drake.demeapp.ui.carousel.adapter.CarouselAdapter
 import com.drake.demeapp.utils.images
 import kotlin.math.abs
 
-class CarouselFragment : Fragment() {
-    private lateinit var binding: FragmentCarouselBinding
+class CarouselFragment : BaseFragment<FragmentCarouselBinding>(
+    FragmentCarouselBinding::inflate
+) {
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var callback: Runnable
+    private lateinit var carouselAdapter: CarouselAdapter
 
     companion object {
         fun newInstance() = CarouselFragment()
         const val TAG = "CAROUSEL_FRAGMENT"
         private const val TIMEOUT = 2 * 1000
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentCarouselBinding.inflate(inflater)
-        return binding.root
     }
 
     private fun resetHandle() {
@@ -41,10 +32,15 @@ class CarouselFragment : Fragment() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val carouselAdapter = CarouselAdapter(images)
+
+
+    override fun setUpAdapter() {
+        carouselAdapter = CarouselAdapter()
+    }
+
+    override fun setUpViews() {
         binding.apply {
+            carouselAdapter.submitList(images)
             callback = Runnable {
                 val index = viewPager.currentItem
                 when (index) {

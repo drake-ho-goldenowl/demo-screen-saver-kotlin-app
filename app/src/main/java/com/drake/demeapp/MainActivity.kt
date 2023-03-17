@@ -3,21 +3,17 @@ package com.drake.demeapp
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.drake.demeapp.ui.carousel.CarouselFragment
 import com.drake.demeapp.ui.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
-    companion object {
-        private const val TIMEOUT = 10 * 1000
-    }
-
     private val handler = Handler(Looper.getMainLooper())
+    private val viewModel : MainViewModel by viewModels()
 
     private val callback = Runnable {
-        supportFragmentManager.beginTransaction()
-            .add(R.id.container, CarouselFragment.newInstance(), CarouselFragment.TAG)
-            .commitNow()
+        openViewPager()
     }
 
     private fun resetTimer() {
@@ -28,7 +24,15 @@ class MainActivity : AppCompatActivity() {
                 .commitNow()
         }
         handler.removeCallbacks(callback)
-        handler.postDelayed(callback, TIMEOUT.toLong())
+        handler.postDelayed(callback, viewModel.getTime())
+    }
+
+    private fun openViewPager(){
+        supportFragmentManager.beginTransaction()
+            .add(R.id.container, CarouselFragment.newInstance(), CarouselFragment.TAG)
+            .commitNow()
+        stopTimer()
+        viewModel.dismissBottomSheet.postValue(true)
     }
 
     private fun stopTimer() {
@@ -46,6 +50,24 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, MainFragment.newInstance())
                 .commitNow()
+        }
+
+        viewModel.onClick.observe(this){
+            if(it == true){
+                openViewPager()
+                viewModel.onClick.postValue(false)
+            }
+        }
+
+        viewModel.time.observe(this){
+            resetTimer()
+        }
+
+        viewModel.isReset.observe(this){
+            if(it == true){
+                resetTimer()
+                viewModel.isReset.postValue(false)
+            }
         }
     }
 
